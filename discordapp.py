@@ -7,10 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 
 
-default_url = 'https://discordapp.com/channels/@me'
-delay = 1
 login_url = 'https://discordapp.com/login'
-timeout = 15
 
 
 class Discordapp:
@@ -19,6 +16,10 @@ class Discordapp:
         options = webdriver.ChromeOptions()
         options.add_argument('--incognito')
         self.driver = webdriver.Chrome(options=options)
+
+        # Define timing attributes
+        self.delay = 0.5
+        self.timeout = 10
 
     def __enter__(self):
         return self
@@ -33,7 +34,7 @@ class Discordapp:
 
         # Wait for redirect away from server channel
         try:
-            wait = WebDriverWait(self.driver, timeout)
+            wait = WebDriverWait(self.driver, self.timeout)
             wait.until_not(EC.url_to_be(url))
 
             # Redirect; return False
@@ -47,7 +48,7 @@ class Discordapp:
         self.driver.get(login_url)
 
         # Create WebDriverWait object
-        wait = WebDriverWait(self.driver, timeout)
+        wait = WebDriverWait(self.driver, self.timeout)
 
         # Wait for login form to load
         try:
@@ -66,9 +67,9 @@ class Discordapp:
         inputs[1].clear()
         inputs[1].send_keys(password, Keys.RETURN)
 
-        # Wait for redirect to default URL
+        # Wait for redirect away from login URL
         try:
-            wait.until(EC.url_to_be(default_url))
+            wait.until_not(EC.url_to_be(login_url))
             return True
         except:
             return False
@@ -80,4 +81,4 @@ class Discordapp:
         message_box.send_keys(message, Keys.RETURN)
 
         # Delay for processing
-        time.sleep(delay)
+        time.sleep(self.delay)
