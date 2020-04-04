@@ -7,19 +7,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 
 
+default_delay = 0.5
+default_timeout = 10
 login_url = 'https://discordapp.com/login'
 
 
 class Discordapp:
     def __init__(self):
-        # Create instance of Chrome driver in incognito mode
+        # Create instance of Chrome driver without GUI
         options = webdriver.ChromeOptions()
+        options.headless = True
         options.add_argument('--incognito')
+        options.add_argument('--disable-logging')
         self.driver = webdriver.Chrome(options=options)
 
-        # Define timing attributes
-        self.delay = 0.5
-        self.timeout = 10
+        # Define timing attributes and set to default values
+        self.delay = default_delay
+        self.timeout = default_timeout
 
     def __enter__(self):
         return self
@@ -59,12 +63,8 @@ class Discordapp:
         # Find login input elements
         inputs = self.driver.find_elements_by_tag_name('input')
 
-        # Input email
-        inputs[0].clear()
+        # Input email address and password then return
         inputs[0].send_keys(email)
-
-        # Input password and return
-        inputs[1].clear()
         inputs[1].send_keys(password, Keys.RETURN)
 
         # Wait for redirect away from login URL
@@ -75,10 +75,11 @@ class Discordapp:
             return False
 
     def send(self, message: str) -> None:
-        # Send message
-        message_box = self.driver.find_element_by_class_name('textArea-2Spzkt')
-        message_box.clear()
-        message_box.send_keys(message, Keys.RETURN)
+        try:
+            # Send message
+            self.driver.find_element_by_class_name('textArea-2Spzkt').send_keys(message, Keys.RETURN)
 
-        # Delay for processing
-        time.sleep(self.delay)
+            # Delay for processing
+            time.sleep(self.delay)
+        except:
+            pass
