@@ -40,11 +40,6 @@ def main() -> None:
             else:
                 print('Invalid URL or connection error. Try again.')
 
-        # Set message box CSS selector attribute of Discordapp object
-        css_selector = input(f'Enter CSS selector of message box (default {discord.css_selector} correct as of version \'Stable 57334 (b1437cc)\' released 10/03/2020): ').strip()
-        if css_selector:
-            discord.css_selector = css_selector
-
         # Create and initialise DankMemer object
         memer = DankMemer(discord)
         prefix = input(f'\nEnter Dank Memer bot prefix (default "{memer.prefix}"): ').strip()
@@ -64,7 +59,6 @@ def quick_run(
     url,             # type: str
     timeout=0,       # type: int
     delay=0,         # type: float
-    css_selector='', # type: str
     prefix='',       # type: str
     recipient='',    # type: str
     ) -> None:
@@ -104,10 +98,6 @@ def quick_run(
             # All retries failed; return
             print(f'Server channel load for {email} failed {max_retries} times. Exiting...')
             return
-
-        # Set message box CSS selector attribute of Discordapp object
-        if css_selector:
-            discord.css_selector = css_selector
 
         # Create and initialise DankMemer object
         memer = DankMemer(discord)
