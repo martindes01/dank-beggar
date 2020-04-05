@@ -9,3 +9,8 @@ env/
 # Visual Studio Code
 
 .vscode/
+
+
+# Testing
+
+personal_test.py
