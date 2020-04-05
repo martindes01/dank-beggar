@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 
 
-# Message box css selector correct as of version 'Stable 57334 (b1437cc)' released 10/03/2020
+# Message box CSS selector correct as of version 'Stable 57334 (b1437cc)' released 10/03/2020
 default_css_selector = '.slateTextArea-1Mkdgw'
 
 default_delay = 0.5
