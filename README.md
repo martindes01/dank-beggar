@@ -1,117 +1,126 @@
 # dank-beggar
 
+*A background script to get rich quick in the Dank Memer Discord bot currency system. Beg like a little baby and spam your way to virtual affluence!*
+
 ## About
 
-This project is an entertaining personal test of the browser automation features of the [selenium](https://pypi.org/project/selenium/) package, and the scheduling and multi-processing features of the Python language.
-It is not intended to be taken seriously.
+This is a novel exploration of the browser automation features of [Selenium WebDriver](https://www.selenium.dev/documentation/), as well as the scheduling and multiprocessing features of the [Python standard library](https://docs.python.org/3/library/).
 
-The documentation of the Python implementation of Selenium WebDriver can be found at https://selenium-python.readthedocs.io/.
+This project is compatible with build 57334 (version hash `b1437cc`) of the Discord web application by Discord Inc.
+The corresponding changelog is dated 2020-03-10.
 
-## Disclaimer
+## Getting Started
 
-:warning: **DO NOT use these scripts without first reading and understanding the [Terms of Service](https://dankmemer.lol/terms) and [Rules](https://dankmemer.lol/rules) of the Dank Memer Discord bot.** :warning:
+### Prerequisites
 
-## Pre-requisites
+It is assumed that you have already created a [Discord](https://discordapp.com/) account and set up a personal test server with at least one text channel.
 
-* It is assumed that you have already
+You may also wish to add the [Dank Memer](https://dankmemer.lol/) Discord bot to the test server.
+Note, however, that the bot does not need to be present in order to observe the Selenium and Python features that are explored in this project.
+In fact, it is recommended that you do not use the bot in this manner without first reading and understanding its [terms of service](https://dankmemer.lol/terms) and [rules](https://dankmemer.lol/rules).
 
-  1. created a [Discord](https://discordapp.com/) account, and
-  1. created a test server with at least one text channel on Discord.
+An installation of [Python](https://www.python.org/) version 3.6 or later is required to run the software.
 
-  You may also wish to add the [Dank Memer](https://dankmemer.lol/) bot to the test server.
-  However, note that the bot does not need to be present in order to observe the selenium and Python features that are tested in this project.
-  In fact, it is recommended that you do not use the Dank Memer bot when testing these scripts (see [Disclaimer](#disclaimer)).
+This project currently uses the Google Chrome interface of Selenium WebDriver.
+Therefore, an installation of the [Google Chrome](https://www.google.com/chrome/) web browser is required to run the software.
 
-* [Python 3.6 or greater](https://www.python.org/downloads/) is required to use these scripts.
+If you wish to use an alternative interface, refer to the [Selenium documentation](https://www.selenium.dev/documentation/).
+You will need to redefine the `__init__` method of the `Discordapp` class in [discordapp.py](discordapp.py).
 
-* Currently, this project uses the [Google Chrome](https://www.google.com/chrome/) interface of Selenium WebDriver.
-  Hence, you will need to have the Google Chrome web browser installed on your system.
+### Installation
 
-  If you wish to use an alternative browser, refer to the [selenium-python](https://selenium-python.readthedocs.io/) documentation.
-  You will need to redefine the `__init__` method of the `Discordapp` class in [discordapp.py](discordapp.py).
+Clone the source from this repository.
 
-## Installation
+```shell
+git clone https://github.com/martindes01/dank-beggar.git
+cd dank-beggar
+```
 
-1. In your working directory, clone this repository.
-   ```bash
-   $ git clone https://github.com/martindes01/dank-beggar
-   ```
+Create and activate a virtual environment, specifying a suitable path `<path>`.
+A common name for the environment directory is `.venv`.
 
-1. Create and activate a virtual environment.
-   ```bash
-   $ python3 -m venv myenv
-   $ source myenv/Scripts/activate
-   ```
+```shell
+python3 -m venv <path>
+source <path>/Scripts/activate
+```
 
-1. Install the packages listed in [requirements.txt](requirements.txt).
-   ```bash
-   (myenv) $ pip install -r requirements.txt
-   ```
+Install the dependencies listed in [requirements.txt](requirements.txt).
 
-1. Download the version of [ChromeDriver](https://chromedriver.chromium.org/home) that corresponds to your version of Google Chrome.
-   1. In Google Chrome, navigate to [chrome://version/](chrome://version/) and note the version number.
-   2. Download the correct version of ChromeDriver from https://chromedriver.chromium.org/downloads.
-   3. Either add the ChromeDriver executable to your system path or place it in your working directory.
+```shell
+pip install --requirement requirements.txt
+```
 
-   With some changes to the code, other web browsers and drivers are available (see [Pre-requisites](#pre-requisites)).
+Download the version of [ChromeDriver](https://chromedriver.chromium.org/) that corresponds to the installed version of Google Chrome.
+1. In Google Chrome, navigate to `chrome://version/` and note the version number.
+1. Download the corresponding version of ChromeDriver from [here](https://chromedriver.chromium.org/downloads).
+1. Add the ChromeDriver executable to the system path or place it in the root directory.
 
 ## Usage
 
-### Parameters
+### Interactive Mode
+
+To start the process in interactive mode, run the `dank_beggar.py` script and follow the prompts.
+You will need the email address and password of your Discord account and the full URL of the target text channel in your personal test server.
+
+```bash
+python3 dank_beggar.py
+```
+
+### Direct Mode
+
+#### Warning
+
+The [example.py](example.py) script allows the process to be started without prompts.
+Note, however, that this requires saving your Discord email address and password as strings in the script.
+Therefore, please do not use this method if you are using a public machine or if there is any possibility that someone else could access your files.
+
+#### Create the Script
+
+Create a copy of `example.py` named `personal_test.py`, which already has an entry in `.gitignore`.
+The following changes should be made only to `personal_test.py` and not to `example.py` or any other tracked file.
+
+Add your Discord login details to the `accounts` list.
+Each account is defined as a tuple of a Discord account email address and the corresponding password.
+
+Additional accounts can be added to the list and used to accrue and deposit coins (Dank Memer currency) into the primary account.
+To enable this, set the `recipient` string to the username or server nickname of the primary account, and uncomment the `'recipient': recipient` keyword argument of the `kwargs` dictionary.
+
+Set the `server_channel_url` string to the full URL of the target text channel in your personal test server.
+
+The script starts a new process for each account.
+Each process targets the `quick_run` method of `dank_beggar.py`.
+The required parameters of the method are defined by position in the `args` tuple.
+The optional parameters of the method are defined by keyword in the `kwargs` dictionary.
+See the [reference](#reference) for more information.
+
+#### Run the Script
+
+To start the process in direct mode, run the `personal_test.py` script.
+
+```shell
+python3 personal_test.py
+```
+
+### Reference
+
+#### Required Parameters
+
+Parameter | Definition
+--- | ---
+`max_retries: int` | Maximum number of times to retry a failed page load
+`account: tuple[str, str]` | Tuple of a Discord account email address and the corresponding password
+`server_channel_url: str` | Full URL of the target text channel in the Discord server
+
+#### Optional Parameters
 
 Parameter | Definition | Default value
 --- | --- | :---:
-`max_retries: int` | Maximum number of times to retry a failed process that requires web driver navigation |
-`timeout: int` | Number of seconds to wait for web driver page load or redirect | `10`
-`delay: float` | Number of seconds to wait for bot reply between sending messages | `0.5`
-`css_selector: str` | CSS selector for Discord web app message box | `'.slateTextArea-1Mkdgw'` [*](#footnote-a)
+`timeout: int` | Number of seconds to wait for a page load or redirect | `10`
+`delay: float` | Number of seconds to wait for a bot reply between sending messages | `0.5`
 `prefix: str` | Dank Memer Discord bot command prefix | `'pls'`
-`recipient: str` | Username or server nickname of primary account for coin sharing | `''`
-
-<span id="footnote-a">*</span> CSS selector correct as of version `Stable 57334 (b1437cc)` of the Discord web app (released 10/03/2020).
-
-### Method 1 ([dank_beggar.py](dank_beggar.py))
-
-Run [dank_beggar.py](dank_beggar.py) from the command line and follow the prompts.
-```bash
-$ python3 dank_beggar.py
-```
-
-You will need
-* the email and password of your Discord account, and
-* the full URL of the text channel in your Discord test server.
-
-### Method 2 ([example.py](example.py))
-
-#### Notice
-
-The [example.py](example.py) script is provided for the convenience of those who may wish to run [dank_beggar.py](dank_beggar.py) multiple times without the need to repeat each prompt.
-Note, however, that this requires saving your Discord password as a string in the script.
-
-Therefore, please observe the following advice.
-
-* :warning: **DO NOT use this method if you are using a public computer or if there is a possibility that anyone else could access your files.** :warning:
-
-* :warning: **It is recommended that you rename [example.py](example.py) to `personal_test.py` and make sure that the file has been added to your [.gitignore](.gitignore).** :warning:
-
-#### Definition
-
-Each account is defined as a tuple of `(email, password)` in the `accounts` list.
-
-Additional accounts can be used to accrue and deposit coins (Dank Memer currency) into the primary account.
-To enable this, the username or server nickname of the primary account must be defined in the `recipient` string, and the `'recipient': recipient` keyword argument of the `kwargs` dictionary must be uncommented.
-
-The full URL of the `dank-memer` channel of your test server must be defined in the `server_channel_url` string.
-
-Assuming you have renamed [example.py](example.py) to `personal_test.py` (and made sure that the file has been added to your [.gitignore](.gitignore)) as recommended in [Notice](#notice), you can now run the script as follows.
-```bash
-$ python3 personal_test.py
-```
-
-All parameters listed in [Parameters](#parameters) can be altered.
-`max_retries` is the first positional argument of the `args` tuple.
-The remaining parameters are keyword arguments defined in the `kwargs` dictionary.
+`recipient: str` | Username or server nickname of the primary account for coin sharing | `''`
 
 ## License
 
-This project is licensed under the terms of the [MIT license](LICENSE).
+This project is distributed under the terms of the MIT License.
+See [LICENSE](LICENSE) for more information.
