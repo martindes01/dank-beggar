@@ -7,6 +7,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 
 
+# Message box css selector correct as of version 'Stable 57334 (b1437cc)' released 10/03/2020
+default_css_selector = '.slateTextArea-1Mkdgw'
+
 default_delay = 0.5
 default_timeout = 10
 login_url = 'https://discordapp.com/login'
@@ -22,6 +25,7 @@ class Discordapp:
         self.driver = webdriver.Chrome(options=options)
 
         # Define timing attributes and set to default values
+        self.css_selector = default_css_selector
         self.delay = default_delay
         self.timeout = default_timeout
 
@@ -77,7 +81,7 @@ class Discordapp:
     def send(self, message: str) -> None:
         try:
             # Send message
-            self.driver.find_element_by_class_name('textArea-2Spzkt').send_keys(message, Keys.RETURN)
+            self.driver.find_element_by_css_selector(self.css_selector).send_keys(message, Keys.RETURN)
 
             # Delay for processing
             time.sleep(self.delay)

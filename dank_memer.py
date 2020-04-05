@@ -27,7 +27,7 @@ class DankMemer:
         self.rand = random.SystemRandom()
 
         # Create scheduler
-        self.sched = sched.scheduler(time.time, time.sleep)
+        self.schedule = sched.scheduler(time.time, time.sleep)
 
         # Spam settings
         self.interval = base_interval
@@ -38,7 +38,7 @@ class DankMemer:
         # Run schedule
         # Start at one hour
         self.spam(3600)
-        self.sched.run()
+        self.schedule.run()
 
     def spam(self, seconds: int) -> None:
         # Send 'weekly' command every spam interval to increase bank capacity
@@ -68,4 +68,4 @@ class DankMemer:
             seconds = 0
 
         # Repeat
-        self.sched.enter(self.interval, 1, self.spam, argument=(seconds+self.interval,))
+        self.schedule.enter(self.interval, 1, self.spam, argument=(seconds+self.interval,))
