@@ -33,12 +33,11 @@ if __name__ == '__main__':
         # Specify required positional arguments (max_retries: int, email: str, password: str, url: str)
         args = (5,) + account + (server_channel_url,)
 
-        # Specify optional keyword arguments (timeout: int, delay: float, css_selector: str, prefix: str, recipient: str)
+        # Specify optional keyword arguments (timeout: int, delay: float, prefix: str, recipient: str)
         # The default value of each argument is shown
         kwargs = {
             # 'timeout': 10,
             # 'delay': 0.5,
-            # 'css_selector': '.slateTextArea-1Mkdgw',
             # 'prefix': 'pls',
             # 'recipient': recipient,
         }
